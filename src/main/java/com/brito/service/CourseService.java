@@ -8,7 +8,6 @@ import org.springframework.validation.annotation.Validated;
 
 import com.brito.dto.CourseRecordDTO;
 import com.brito.dto.mapper.CourseMapper;
-import com.brito.enums.Category;
 import com.brito.exception.RecordNotFoundException;
 import com.brito.repository.CourseRepository;
 
@@ -46,7 +45,7 @@ public class CourseService {
         return courseRepository.findById(id)
                 .map(courseFound -> {
                     courseFound.setName(course.name());
-                    courseFound.setCategory(Category.FRONTEND);
+                    courseFound.setCategory(courseMapper.convertCategoryValue(course.category()));
                     return courseMapper.toDTO(courseRepository.save(courseFound));
                 }).orElseThrow(() -> new RecordNotFoundException(id));
     }
